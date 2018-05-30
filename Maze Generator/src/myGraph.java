@@ -9,6 +9,7 @@ import java.util.Random;
 public class myGraph<E> implements Cloneable {
 	
 	private int [][] edges;
+	//private int[][]
 	private Object[] labels; //The vertex labels will be E objects.
 	
 	private int depth;
@@ -56,7 +57,7 @@ public class myGraph<E> implements Cloneable {
 		} else if (target < 0 || target > this.size()) {
 			throw new IndexOutOfBoundsException("please try a different target in your isEdge method.");
 		} else {
-			return (edges[source][target] > 0 || edges[target][source] > 0);
+			return (edges[source][target] > 0 && edges[target][source] > 0);
 		}
 	}
 	public void removeEdge(int source, int target) {
@@ -65,8 +66,8 @@ public class myGraph<E> implements Cloneable {
 		} else if (target < 0 || source > this.size()) {
 			throw new IndexOutOfBoundsException("please try a different target in your removeEdge method.");
 		} else {
-			edges[source][target] = 0;
-			edges[source][target] = 0;
+			edges[source][target] = edges[source][target] = 0;
+			
 		}
 	}
 	public int getEdge(int source, int target) {
@@ -136,10 +137,10 @@ public class myGraph<E> implements Cloneable {
 		for (int i = 0; i < size() - 1; i++) {
 			
 			if (i % width < (width - 1)) {
-				addEdge(i, i + 1, (randomInt.nextInt(size())) + 1); //sets horizontal edge weights to 1. We add 1 to ensure an edge isn't set to 0.
+				addEdge(i, i + 1, (randomInt.nextInt(size())) + 1); //sets horizontal edge weights. We add 1 to ensure an edge isn't set to 0.
 			}
 			if (i < size() - width) {
-				addEdge(i, i + width, (randomInt.nextInt(size())) + 1);//sets vertical edge weights to 1.
+				addEdge(i, i + width, (randomInt.nextInt(size())) + 1); //sets vertical edge weights.
 			}	
 		}
 	}

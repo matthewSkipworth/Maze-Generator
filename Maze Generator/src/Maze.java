@@ -59,8 +59,17 @@ public class Maze {
 	void breakLeastWall(int cell) {
 		//int other = cell;
 
-		int path = cells.minEdgeNeighbor(cell);
+		
 		//System.out.println(path + "path");
+		
+		if (cell >= cells.width() && cell < cells.width() * 2) {
+			cell +=1;
+		} else if (cell >= (cells.width() * 2) && cell < (cells.width() * 3)) {
+			cell +=2;
+		} else if (cell >= (cells.width() * 3) && cell < (cells.size())) {
+			cell +=3;
+		}
+		int path = cells.minEdgeNeighbor(cell);
 		if (path == (cell - cells.width())) {
 			removeTop(cell);
 		} else if (path == (cell + cells.width())) {
@@ -74,50 +83,26 @@ public class Maze {
 		
 	}
 	
-	void removeRight(int cell) {
-		if (cell > cells.width() && cell < cells.width() * 2) {
-			cell +=1;
-		} else if (cell > (cells.width() * 2) && cell < (cells.width() * 3)) {
-			cell +=2;
-		} else if (cell > (cells.width() * 3) && cell < (cells.size())) {
-			cell +=3;
-		} 
-		System.out.println(cell + "cell right");
-		mazeGraph.removeEdge(cell + 1, cell + 1 + mazeGraph.width());
+	void removeRight(int vertex) {
+		 
+		System.out.println(vertex + "cell right");
+		mazeGraph.removeEdge(vertex+1 , vertex + 1 + mazeGraph.width());
 	}
-	void removeLeft(int cell) {
-		if (cell > cells.width() && cell < cells.width() * 2) {
-			cell +=1;
-		} else if (cell > (cells.width() * 2) && cell < (cells.width() * 3)) {
-			cell +=2;
-		} else if (cell > (cells.width() * 3) && cell < (cells.size())) {
-			cell +=3;
-		} 
-		System.out.println(cell + "cell left");
-		mazeGraph.removeEdge(cell, cell + mazeGraph.width());
+	void removeLeft(int vertex) {
+		
+		System.out.println(vertex + "cell left");
+		mazeGraph.removeEdge(vertex, vertex + mazeGraph.width());
 	}
-	void removeTop(int cell) {
-		if (cell > cells.width() && cell < cells.width() * 2) {
-			cell +=1;
-		} else if (cell > (cells.width() * 2) && cell < (cells.width() * 3)) {
-			cell +=2;
-		} else if (cell > (cells.width() * 3) && cell < (cells.size())) {
-			cell +=3;
-		} 
-		System.out.println(cell + "cell top");
-		mazeGraph.removeEdge(cell, cell + 1);
+	void removeTop(int vertex) {
+		
+		System.out.println(vertex + "cell top");
+		mazeGraph.removeEdge(vertex, vertex + 1);
 	}
 	
-	void removeBottom(int cell) {
-		if (cell > cells.width() && cell < cells.width() * 2) {
-			cell +=1;
-		} else if (cell > (cells.width() * 2) && cell < (cells.width() * 3)) {
-			cell +=2;
-		} else if (cell > (cells.width() * 3) && cell < (cells.size())) {
-			cell +=3;
-		} 
-		System.out.println(cell + "cell bottom");
-		mazeGraph.removeEdge(cell + mazeGraph.width(), cell + 1 + mazeGraph.width());
+	void removeBottom(int vertex) {
+		
+		System.out.println(vertex + "cell bottom");
+		mazeGraph.removeEdge(vertex + mazeGraph.width(), vertex + 1 + mazeGraph.width());
 	}
 	
 	void display() {		
@@ -129,16 +114,20 @@ public class Maze {
 				if (mazeGraph.isEdge(i, i+1)) {
 					//System.out.print(mazeGraph.getEdge(i,i+1));
 					System.out.printf("%3s", "-");
+				} else {
+					System.out.printf("%3s"," ");
 				}
 				if(i % width == (width - 1)) {
 					System.out.println();
 					if (i < (mazeGraph.size() - width)) {
-						for(int j = 1-width; j < 1; j++) {//the start of the last row to the end of the last row. (0-4 for the first row)
+						for(int j = 1-width; j < 1; j++) { //the start of the last row to the end of the last row. (0-4 for the first row)
 						
 						
 							//System.out.print(i);
 							if (mazeGraph.isEdge((i+j), (i+j+width))) {	
 								System.out.printf("%3s","|");
+							} else {
+								System.out.printf("%3s"," ");
 							}	
 							if (count < cells.width()) {
 								System.out.printf("%3s",cells.getLabel(j+i));
@@ -160,6 +149,9 @@ public class Maze {
 					if (mazeGraph.isEdge(i, i-1)) {
 						System.out.printf("%3s","-");
 					}
+					else {
+						System.out.printf("%3s"," ");
+					}
 					System.out.printf("%3s", mazeGraph.getLabel(i));
 					
 					if(i % width == (width - 1)) {
@@ -170,6 +162,9 @@ public class Maze {
 								//System.out.print(i);
 								if (mazeGraph.isEdge((i+j), (i+j+width))) {
 									System.out.printf("%3s","|");
+								} 
+								else {
+									System.out.printf("%3s"," ");
 								}
 								if (count < 0) {
 									//System.out.print(i);

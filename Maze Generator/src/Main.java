@@ -34,14 +34,9 @@ public class Main {
 		
 		System.out.println(Arrays.toString(graph.mazeGraph.neighbors(19)));
 		//System.out.println();
-		graph.prims(0);
+		//graph.prims(0);
 		
-		graph.breakLeastWall(9);
-		//graph.removeBottom(9);
-		System.out.println((graph.mazeGraph.isEdge(11,12)));
-		System.out.println((graph.mazeGraph.isEdge(11,16)));
-		System.out.println((graph.mazeGraph.isEdge(16,17)));
-		System.out.println((graph.mazeGraph.isEdge(12,17)));
+		graph.breakLeastWall(8);
 		graph.display();
 	}
 }
