@@ -82,7 +82,7 @@ public class myGraph<E> implements Cloneable {
 		int count = 0;
 		int[] answer;
 		
-		if (vertex < 0 || vertex > size() - 1) {
+		if (vertex < 0 || vertex >= size()) {
 			throw new IndexOutOfBoundsException("please try a different vertex number in your neighbors method.");
 		} else {
 			for (int i = 0; i < labels.length; i++) {
@@ -111,7 +111,7 @@ public class myGraph<E> implements Cloneable {
 				minNeighbor = nabes[i];//getEdge(vertex, nabes[i]);
 			}
 		}
-		System.out.println(minNeighbor + " minNeighbor");
+		//System.out.println(minNeighbor + " minNeighbor");
 		return minNeighbor;
 	}
 	
@@ -155,5 +155,6 @@ public class myGraph<E> implements Cloneable {
 		
 		return graphString;
 	}
+	
 	
 }
