@@ -8,7 +8,7 @@ public class Main {
 
 
 	public static void testMyGraph() {
-		Maze graph = new Maze(9,10, false);
+		Maze graph = new Maze(5,5, false);
 		
 		for (int i = 0; i < graph.mazeGraph.size(); i++) {
 			//graph.mazeGraph.setLabel(i, (char) (65 + i));

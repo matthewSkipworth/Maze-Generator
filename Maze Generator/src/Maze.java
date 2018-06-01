@@ -54,7 +54,8 @@ public class Maze {
 		walls.offer(getLeft(cell));
 		walls.offer(getRight(cell));
 		
-		while (!walls.isEmpty() ) {
+		while ((!walls.isEmpty() || containsFalse) && !walls.isEmpty()) {
+			//methodCycle++;
 			System.out.println(maze.toString());
 			//System.out.println("current cell"+ cell);
 			System.out.println("cell walls "+getRight(cell) +", "+ getLeft(cell) +", " + getTop(cell) +", "+ getBottom(cell));
@@ -74,20 +75,20 @@ public class Maze {
 			smallWall = walls.peek();
 			//System.out.println(isWall(cell, smallWall));
 			
-		if (maze.size() > 1 && !isWall(cell, smallWall)) {
+		if (maze.size() >= 1 && !isWall(cell, smallWall)) {
 			
 			
 			System.out.println("stack popped!");
 			hold.push(maze.pop());
-			cell = maze.peek();
 			System.out.println(cell);
-			if (cell==0) {
-				while (((cell == 0) || !isWall(cell, smallWall)) && !hold.isEmpty())  {
+			if (maze.size() == 0) {
+				while (!isWall(cell, smallWall) && !hold.isEmpty())  {
 				
 				maze.push(hold.pop());
 				cell = maze.peek();
 				}
 			}
+			cell = maze.peek();
 			
 		} else if (isTop(smallWall, cell)) {
 				if (!topValid(cell)) {
@@ -205,7 +206,7 @@ public class Maze {
 					cell = nextCell;
 				}
 			}	
-		methodCycle++;
+		
 		}
 		return maze;
 	}
