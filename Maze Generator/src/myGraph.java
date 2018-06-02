@@ -5,16 +5,28 @@ import java.util.Random;
 //TCSS 342, Spring Quarter 2018
 
 //Modified version of the graph implementation from "DATA STRUCTURES & Other Objects Using JAVA", Fourth Edition by MICHAEL MAIN
-
+/**
+ * the myGraph class is used as a foundation on which the Maze class is 
+ * constructed.
+ * 
+ * @author Matthew Skipworth
+ * @version 1 June 2018
+ */
 public class myGraph<E> implements Cloneable {
 	
 	private int [][] edges;
 	//private int[][]
-	private Object[] labels; //The vertex labels will be E objects.
+	Object[] labels; //The vertex labels will be E objects.
 	
 	private int depth;
 	private int width;
-	
+/**
+ * myGraph Constructor
+ * 	
+ * @param nVertices represents the number of cells in myGraph
+ * @param deep represents the graph depth
+ * @param wide represents the graph width
+ */
 	public myGraph(int nVertices, int deep, int wide) {
 		if (nVertices < 0) {
 			throw new NegativeArraySizeException("Please try a different number of vertices in your graph constructor.");
@@ -32,16 +44,35 @@ public class myGraph<E> implements Cloneable {
 		labels = (E[]) new Object[nVertices];
 		
 	}*/
-	
+/**
+ * size method returns the size of the graph as if all its elements were stored
+ * in a list
+ * 
+ * @return returns the graph size
+ */
 	int size() {
 		return labels.length;
 	}
+/**
+ * width method returns myGraph's width.	
+ * @return returns the width
+ */
 	int width() {
 		return this.width;
 	}
+/**
+ * depth method returns myGraph's depth.	
+ * @return returns the depth
+ */
 	int depth() {
 		return this.depth;
 	}
+/**
+ * addEdge method takes in two vertices and an edge weight and creates an edge.	
+ * @param source represents the first vertex
+ * @param target represents the second vertex
+ * @param weight represents the edge weight
+ */
 	public void addEdge(int source, int target, int weight) {
 		if (source < 0 || source > this.size() - 1) {
 			throw new IndexOutOfBoundsException("please try a different source in your addEdge method.");
@@ -51,6 +82,13 @@ public class myGraph<E> implements Cloneable {
 			edges[source][target] = edges[target][source] = weight;
 		}
 	}
+/**
+ * isEdge method checks two myGraph vertices to see if there exists an edge
+ * between them.	
+ * @param source represents the first vertex
+ * @param target represents the second vertex
+ * @return returns true if an edge exists
+ */
 	public boolean isEdge(int source, int target) {
 		if (source < 0 || source > this.size() - 1) {
 			throw new IndexOutOfBoundsException("please try a different source in your isEdge method.");
@@ -60,6 +98,11 @@ public class myGraph<E> implements Cloneable {
 			return (edges[source][target] > 0 && edges[target][source] > 0);
 		}
 	}
+/**
+ * takes two vertices and deletes the edge between them.	
+ * @param source represents the first vertex
+ * @param target represents the second vertex
+ */
 	public void removeEdge(int source, int target) {
 		if (source < 0 || source > this.size() - 1) {
 			throw new IndexOutOfBoundsException("please try a different source in your removeEdge method.");
@@ -70,6 +113,12 @@ public class myGraph<E> implements Cloneable {
 			
 		}
 	}
+/**
+ * getEdge method gets the edge weight between two vertices
+ * @param source represents the first vertex
+ * @param target represents the second vertex
+ * @return returns the edge weight
+ */
 	public int getEdge(int source, int target) {
 		return edges[source][target];
 	}
@@ -77,7 +126,11 @@ public class myGraph<E> implements Cloneable {
 	public E getLabel(int vertex) {
 		return (E) labels[vertex];
 	}
-	
+/**
+ * neighbors method takes in a vertex and returns an array of its neighbors	
+ * @param vertex represents the current cell
+ * @return returns an array of neigboring vertices
+ */
 	public int[] neighbors(int vertex) {
 		int count = 0;
 		int[] answer;
@@ -100,6 +153,13 @@ public class myGraph<E> implements Cloneable {
 		}
 		return answer;
 	}
+/**
+ * minEdgeNeighbor method returns the weight of the wall of the current
+ * cell with the smallest weight
+ * 	
+ * @param vertex represents the current cell
+ * @return returns the wall with the smallest weight
+ */
 	public int minEdgeNeighbor(int vertex) {
 		int[] nabes = new int[this.neighbors(vertex).length]; 
 		for (int i = 0; i < this.neighbors(vertex).length; i++) {
@@ -114,11 +174,18 @@ public class myGraph<E> implements Cloneable {
 		//System.out.println(minNeighbor + " minNeighbor");
 		return minNeighbor;
 	}
-	
+/**
+ * setLabel method takes in a vertex and a new label and relabels the 
+ * vertex
+ * @param vertex represents a vertex to be relabeled
+ * @param newLabel represents the new label
+ */
 	public void setLabel(int vertex, E newLabel) {
 		labels[vertex] = newLabel;
 	}
-	
+/**
+ * method clone creates a clone of myGraph
+ */
 	public myGraph<E> clone() {
 		myGraph<E> answer;
 		
@@ -132,18 +199,25 @@ public class myGraph<E> implements Cloneable {
 		
 		return answer;
 	}
+/**
+ * method connectAllAdjacentVertices connects all the vertices in the graph
+ * with their adjacent vertices	
+ */
 	public void connectAllAdjacentVertices() {
 		Random randomInt = new Random();
 		for (int i = 0; i < size() - 1; i++) {
 			
 			if (i % width < (width - 1)) {
-				addEdge(i, i + 1, (randomInt.nextInt(size())) + 1); //sets horizontal edge weights. We add 1 to ensure an edge isn't set to 0.
+				addEdge(i, i + 1, (randomInt.nextInt(size()) + 1)); //sets horizontal edge weights. We add 1 to ensure an edge isn't set to 0.
 			}
 			if (i < size() - width) {
-				addEdge(i, i + width, (randomInt.nextInt(size())) + 1); //sets vertical edge weights.
+				addEdge(i, i + width, (randomInt.nextInt(size()) + 1)); //sets vertical edge weights.
 			}	
 		}
 	}
+/**
+ * toString method returns a string representation of myGraph	
+ */
 	public String toString() {
 		String graphString = "";
 		graphString += labels[0];
